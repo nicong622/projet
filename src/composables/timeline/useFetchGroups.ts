@@ -1,53 +1,7 @@
-export interface RangeType {
-  from: string
-  to: string
-  x: number
-  width: number
-}
+import type { Ref } from 'vue'
 
-export interface GroupType {
-  name: string
-  ranges: RangeType[]
-}
-
-export default function useFetchGroups() {
-  const basicGroups: GroupType[] = [
-    {
-      name: 'group1',
-      ranges: [
-        {
-          from: '2021-10-2',
-          to: '2021-10-4',
-          x: 0,
-          width: 0,
-        },
-        {
-          from: '2021-10-5',
-          to: '2021-10-7',
-          x: 0,
-          width: 0,
-        },
-      ],
-    },
-    {
-      name: 'group2',
-      ranges: [
-        {
-          from: '2021-10-12',
-          to: '2021-10-14',
-          x: 0,
-          width: 0,
-        },
-        {
-          from: '2021-10-15',
-          to: '2021-10-17',
-          x: 0,
-          width: 0,
-        },
-      ],
-    },
-  ]
-  const renderGroups = ref(basicGroups)
+export default function useFetchGroups(basicGroups: Ref<GroupType[]>) {
+  const renderGroups = ref<GroupType[]>([])
 
   function clacRangePosition(from: RangeType['from'], to: RangeType['to']) {
     const elFrom = document.getElementById(from)
@@ -55,11 +9,14 @@ export default function useFetchGroups() {
 
     if (!elFrom || !elTo) return { x: 0, width: 0 }
 
-    return { x: elFrom.offsetLeft, width: elTo.offsetLeft + elTo.clientWidth - elFrom.offsetLeft }
+    return {
+      x: elFrom.offsetLeft,
+      width: elTo.offsetLeft + elTo.clientWidth - elFrom.offsetLeft,
+    }
   }
 
-  function buildRenderGroups(groups: GroupType[]) {
-    return groups.map(group => ({
+  function buildRenderGroups() {
+    renderGroups.value = basicGroups.value.map(group => ({
       ...group,
       ranges: group.ranges.map(range => ({ ...range, ...clacRangePosition(range.from, range.to) })),
     }))
@@ -67,8 +24,14 @@ export default function useFetchGroups() {
 
   onMounted(async() => {
     await nextTick()
-    renderGroups.value = buildRenderGroups(basicGroups)
+    buildRenderGroups()
   })
+
+  watch(
+    () => basicGroups,
+    buildRenderGroups,
+    { deep: true },
+  )
 
   return {
     renderGroups,

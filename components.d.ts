@@ -4,7 +4,16 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CreateProject: typeof import('./src/components/create-project/index.vue')['default']
+    CreateProjectForm: typeof import('./src/components/CreateProjectForm.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElInput: typeof import('element-plus/es')['ElInput']
     Footer: typeof import('./src/components/Footer.vue')['default']
+    Form: typeof import('./src/components/create-project/Form.vue')['default']
     Timeline: typeof import('./src/components/Timeline.vue')['default']
   }
 }
