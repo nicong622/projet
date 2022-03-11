@@ -15,6 +15,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/Footer.vue')['default']
     Form: typeof import('./src/components/create-project/Form.vue')['default']
     Timeline: typeof import('./src/components/Timeline.vue')['default']
+    TodoItem: typeof import('./src/components/TodoItem.vue')['default']
   }
 }
 
