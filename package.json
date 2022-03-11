@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "author": "nicong622 <liangningcong@gmail.com>",
   "scripts": {
     "dev": "vite --port 3333 --open",
     "build": "cross-env NODE_ENV=production vite build",
